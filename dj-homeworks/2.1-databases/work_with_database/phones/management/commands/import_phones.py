@@ -13,12 +13,8 @@ class Command(BaseCommand):
             phones = list(csv.DictReader(file, delimiter=';'))
 
         for phone in phones:
-            Phone(
-                id=phone['id'],
-                name=phone['name'],
-                image=phone['image'],
-                price=phone['price'],
-                release_date=phone['release_date'],
-                lte_exists=phone['lte_exists'],
-                slug=slugify(phone['name']),
-                ).save()
+            id, name, image, price, release_date, lte_exists, slug = phone.values()
+            slug = slugify(name)
+            phone = Phone(id=id, name=name, image=image, price=price, release_date=release_date,
+                          lte_exists=lte_exists, slug=slug)
+            phone.save()
